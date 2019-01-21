@@ -13,9 +13,9 @@ const bodyParser = require("body-parser");
 //const cookieSession = require("cookie-session");
 const passport = require("passport");
 
-const authRoutes = require("./routers/auth-routes");
-const myShiftzRoutes = require("./routers/myShiftz-routes");
-const passportSetup = require("./config/passport-setup");
+const authRoutes = require("./server/routers/auth-routes");
+const myShiftzRoutes = require("./server/routers/myShiftz-routes");
+const passportSetup = require("./server/config/passport-setup");
 
 // set view engine
 
