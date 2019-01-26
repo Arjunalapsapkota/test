@@ -7,6 +7,13 @@ const app = express();
 
 const cors = require("cors");
 const mongodb = require("mongoose");
+
+const passport = require("passport");
+
+const authRoutes = require("./server/routers/auth-routes");
+const myShiftzRoutes = require("./server/routers/myShiftz-routes");
+const passportSetup = require("./server/config/passport-setup");
+
 // Define middleware here
 app.use(cors()); // Handles all the cors issue
 app.use(bodyParser.json({ type: "*/*" })); // Type indicates ALL header types OK
@@ -32,7 +39,13 @@ try {
 }
 
 // Define API routes here
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
+// set up routes
+app.use("/auth", authRoutes);
+app.use("/myShiftz", myShiftzRoutes);
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get("*", (req, res) => {
