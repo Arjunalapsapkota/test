@@ -5,10 +5,10 @@ const passport = require("passport");
 const requireAuth = passport.authenticate("jwt", { session: false }); // Jwt strategy
 const requireSignin = passport.authenticate("local", { session: false }); // Local Strategy
 const googleauth = passport.authenticate("google", { scope: ["Email"] }); // google Strategy
-
+const instaauth = passport.authenticate("instagram");
 const passportSetup = require("../config/passport-setup");
 const Authentication = require("../controllers/authentication");
-
+const cors = require("cors");
 // ######### Test Routes
 router.post("/test", requireAuth, (req, res) => {
   console.log(
@@ -25,11 +25,23 @@ router.get("/test", (req, res) => {
 //######## Test Routes End
 
 router.get("/google", googleauth); // Google auth
-
+router.get("/instagram", instaauth);
 //auth callback from google
 router.get(
   "/google/redirect",
-  passport.authenticate("google"),
+
+  passport.authenticate("google"), //what does this do?
+
+  (req, res) => {
+    res.redirect("http://localhost:3000/mySiftz");
+    console.log(req);
+  }
+);
+
+router.get(
+  "/instagram/redirect",
+
+  passport.authenticate("instagram"),
   Authentication.signin
 );
 router.post("/signup", Authentication.signup);

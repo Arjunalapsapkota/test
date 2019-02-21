@@ -28,7 +28,23 @@ class Login extends React.Component {
     let data = await res.json();
     console.log(data);
     // saving the received token to the local storage
-    if (data != 404) localStorage.setItem("$tkn", data.token);
+    if (data !== 404) localStorage.setItem("$tkn", data.token);
+    else console.log("please provide valid credentials");
+  };
+  handlegoogle = async e => {
+    e.preventDefault();
+    console.log("i am clicked");
+    //axios.get("http://localhost:3001/auth/google");
+    let res = await fetch("http://localhost:3001/auth/google", {
+      method: "GET"
+    });
+    console.log("getting back here");
+    //save res to local storage
+
+    let data = await res.json();
+    console.log(data);
+    // saving the received token to the local storage
+    if (data !== 404) localStorage.setItem("$tkn", data.token);
     else console.log("please provide valid credentials");
   };
   render() {
@@ -56,7 +72,7 @@ class Login extends React.Component {
             <div className="form-group">
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="inputAddress"
                 name="password"
                 value={this.state.password}
@@ -68,10 +84,10 @@ class Login extends React.Component {
               <div className="form-check">
                 <input
                   type="checkbox"
-                  class="form-check-input"
+                  className="form-check-input"
                   id="exampleCheck1"
                 />
-                <label className="form-check-label" for="exampleCheck1">
+                <label className="form-check-label" htmlFor="exampleCheck1">
                   Remember me
                 </label>
               </div>
@@ -88,18 +104,21 @@ class Login extends React.Component {
             <a href="/api/tiktok">
               <i className="fab fa-facebook-square mr-3 fa-lg" />
             </a>
-            <a href="#">
+            <a href="/auth/instagram">
               <i className="fab fa-instagram mr-3 fa-lg" />
             </a>
-            <button
-              onClick={async e => {
-                e.preventDefault();
-                console.log("i am clicked");
-                axios.get("/auth/google");
-              }}
-            >
+
+            {/* <button onClick={this.handlegoogle}>
               <i className="fab fa-google mr-3 fa-lg" />
-            </button>
+            </button> */}
+            <a href="http://localhost:3001/auth/google">
+              <i className="fab fa-google mr-3 fa-lg" />
+            </a>
+            {/* <Link to="/auth/google">
+              <button className="btn btn-primary signUp-btn">
+                <i className="fab fa-google mr-3 fa-lg" />
+              </button>
+            </Link> */}
           </form>
           <hr />
           <h3 className="leadToSignUp">Don't have an account?</h3>
